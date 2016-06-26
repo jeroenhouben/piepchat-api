@@ -18,7 +18,7 @@ defmodule Peepchat.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Peepchat, []},
-     applications: [:phoenix, :cowboy, :logger, :gettext,
+     applications: [:phoenix, :phoenix_pubsub, :cowboy, :logger, :gettext,
                     :phoenix_ecto, :postgrex, :comeonin]]
   end
 
@@ -30,11 +30,13 @@ defmodule Peepchat.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.1.6"},
+    [{:phoenix, "~> 1.2.0"},
      {:postgrex, ">= 0.0.0"},
-     {:phoenix_ecto, "~> 2.0"},
+     {:phoenix_ecto, "~> 3.0.0"},
+     {:phoenix_pubsub, "~> 1.0"},
      {:gettext, "~> 0.9"},
      {:cors_plug, "~> 1.1"},
+     {:ecto, "~> 2.0.0", override: true},
      {:ja_serializer, "~> 0.9.0"},
      {:guardian, "~> 0.12.0"},
      {:comeonin, "~> 2.4"},
@@ -48,7 +50,10 @@ defmodule Peepchat.Mixfile do
   #
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
-    ["ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
-     "ecto.reset": ["ecto.drop", "ecto.setup"]]
+    [
+      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
+      "ecto.reset": ["ecto.drop", "ecto.setup"],
+      "test": ["ecto.create --quiet", "ecto.migrate", "test"]
+    ]
   end
 end
