@@ -14,6 +14,8 @@ config :peepchat, Peepchat.Endpoint,
   pubsub: [name: Peepchat.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+config :peepchat, ecto_repos: [Peepchat.Repo]
+
 config :guardian, Guardian,
   allowed_algos: ["HS512"], # optional
   verify_module: Guardian.JWT,  # optional
